@@ -1,4 +1,5 @@
-// Example ONLY. Replace these values on the development branch after creating a dedicated Island Hearts Supabase backend.
-// A publishable key may be used in browser code with correctly configured RLS. NEVER place a secret or service_role key here.
-export const SUPABASE_URL = '';
-export const SUPABASE_PUBLISHABLE_KEY = '';
+// Public browser configuration for the isolated Island Hearts development project.
+// IMPORTANT: This publishable key is NOT a service_role or secret key.
+// The application remains on an unpublished development branch until review.
+export const SUPABASE_URL = 'https://eqzomyybqrfojjbfutrn.supabase.co';
+export const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_jdDdIJAmbh1uW-USqjjS3w_RGSYYZD-';
