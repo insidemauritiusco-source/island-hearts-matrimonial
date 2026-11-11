@@ -43,7 +43,7 @@ $('login').addEventListener('submit',async e=>{
 $('resendConfirmation').addEventListener('click',async()=>{
  if(!supabase)return;
  const email=$('loginEmail').value.trim();
- if(!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){status('Enter your registered email address in the login form first.');return}
+ if(!email.includes('@') || !email.includes('.')){status('Enter your registered email address in the login form first.');return}
  const button=$('resendConfirmation');button.disabled=true;
  try{
   const {error}=await supabase.auth.resend({type:'signup',email,options:{emailRedirectTo:location.origin+location.pathname}});
