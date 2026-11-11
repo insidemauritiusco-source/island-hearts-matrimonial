@@ -56,8 +56,8 @@ alter table public.ih_reports enable row level security;
 alter table public.ih_admins enable row level security;
 -- Isolate all tables: no anonymous role access.
 revoke all on public.ih_profiles,public.ih_connections,public.ih_messages,public.ih_blocks,public.ih_reports,public.ih_admins from anon;
-grant select,insert,update on public.ih_profiles to authenticated;
-grant select,insert,update on public.ih_connections to authenticated;
+grant select,insert on public.ih_profiles to authenticated;
+grant select,insert on public.ih_connections to authenticated;
 grant select,insert on public.ih_messages to authenticated;
 grant select,insert,delete on public.ih_blocks to authenticated;
 grant insert,select on public.ih_reports to authenticated;
@@ -97,3 +97,6 @@ create policy "reporter submit" on public.ih_reports for insert to authenticated
  with check(reporter=(select auth.uid()) and status='open');
 create policy "reporter see own" on public.ih_reports for select to authenticated using(reporter=(select auth.uid()));
 -- Trusted admin access and photo handling require server routes and review before production.
+
+-- Sequence access required for identity-backed inserts.
+grant usage,select on all sequences in schema public to authenticated;
