@@ -40,6 +40,17 @@ $('login').addEventListener('submit',async e=>{
  try{const {error}=await supabase.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});status(error?'Login failed: '+error.message:'Signed in.');}
  finally{button.disabled=false}
 });
+$('resendConfirmation').addEventListener('click',async()=>{
+ if(!supabase)return;
+ const email=$('loginEmail').value.trim();
+ if(!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){status('Enter your registered email address in the login form first.');return}
+ const button=$('resendConfirmation');button.disabled=true;
+ try{
+  const {error}=await supabase.auth.resend({type:'signup',email,options:{emailRedirectTo:location.origin+location.pathname}});
+  status(error?'Could not resend confirmation: '+error.message:'If the address is eligible, a fresh confirmation email has been requested. Check Inbox and Spam. Only use the newest confirmation link.');
+ }catch(_e){status('Unable to request a confirmation email. Please try again.')}
+ finally{button.disabled=false}
+});
 $('logout').addEventListener('click',async()=>{if(supabase){await supabase.auth.signOut();status('Signed out.')}});
 $('profile').addEventListener('submit',async e=>{
  e.preventDefault();if(!supabase||!activeUser)return;
